@@ -1,0 +1,624 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#182542" />
+  <meta name="description" content="RH Intense — gestão de pessoas e processos de RH com clareza, proximidade e organização." />
+  <title>RH Intense | Gestão de pessoas com clareza</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #182542;
+      --ink-soft: #34415d;
+      --muted: #667085;
+      --paper: #fbfaf8;
+      --surface: #ffffff;
+      --surface-soft: #f4f3f0;
+      --line: #e6e5e1;
+      --accent: #6b59d3;
+      --accent-dark: #5140b6;
+      --accent-soft: #efedfb;
+      --teal: #3f8079;
+      --teal-soft: #e8f2f0;
+      --amber: #996a25;
+      --amber-soft: #fbf2df;
+      --red: #a64d4c;
+      --red-soft: #f8e9e8;
+      --shadow: 0 20px 55px rgba(24,37,66,.10);
+      --radius: 18px;
+      --max: 1160px;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { margin: 0; background: var(--paper); color: var(--ink); font-size: 16px; line-height: 1.55; }
+    body.modal-open { overflow: hidden; }
+    button, input, select, textarea { font: inherit; }
+    button, a { -webkit-tap-highlight-color: transparent; }
+    a { color: inherit; text-decoration: none; }
+    button { color: inherit; }
+    :focus-visible { outline: 3px solid #8d80ea; outline-offset: 3px; }
+    .skip-link { position: absolute; left: 12px; top: -60px; z-index: 100; background: var(--ink); color: white; padding: 12px 16px; border-radius: 8px; }
+    .skip-link:focus { top: 12px; }
+    .wrap { width: min(var(--max), calc(100% - 48px)); margin-inline: auto; }
+    .eyebrow { display: inline-flex; align-items: center; gap: 9px; color: var(--accent-dark); font-size: 12px; font-weight: 750; letter-spacing: .13em; text-transform: uppercase; }
+    .eyebrow::before { content: ""; width: 22px; height: 2px; background: currentColor; border-radius: 2px; }
+    .section { padding: 96px 0; }
+    .section-head { max-width: 690px; margin-bottom: 36px; }
+    .section-head h2 { margin: 12px 0 14px; font-size: clamp(30px, 4vw, 43px); line-height: 1.13; letter-spacing: -.04em; }
+    .section-head p { margin: 0; color: var(--muted); font-size: 17px; max-width: 610px; }
+    .btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; min-height: 48px; padding: 0 19px; border: 1px solid transparent; border-radius: 10px; background: var(--accent); color: #fff; font-weight: 700; cursor: pointer; transition: background .18s ease, transform .18s ease, border-color .18s ease; }
+    .btn:hover { background: var(--accent-dark); transform: translateY(-1px); }
+    .btn-secondary { background: transparent; color: var(--ink); border-color: var(--line); }
+    .btn-secondary:hover { background: var(--surface-soft); border-color: #d5d3cd; }
+    .btn-light { background: #fff; color: var(--ink); }
+    .btn-light:hover { background: #f2f0fc; }
+    .btn-small { min-height: 40px; padding: 0 14px; font-size: 14px; }
+    .text-link { color: var(--accent-dark); font-weight: 700; display: inline-flex; gap: 8px; align-items: center; border: 0; background: transparent; padding: 0; font: inherit; cursor: pointer; }
+    .text-link:hover { text-decoration: underline; text-underline-offset: 4px; }
+    .topbar { position: sticky; top: 0; z-index: 20; border-bottom: 1px solid rgba(230,229,225,.8); background: rgba(251,250,248,.92); backdrop-filter: blur(14px); }
+    .nav { display: flex; min-height: 76px; align-items: center; justify-content: space-between; gap: 24px; }
+    .brand { display: inline-flex; align-items: center; gap: 11px; font-weight: 850; letter-spacing: .06em; font-size: 16px; white-space: nowrap; }
+    .brand-mark { width: 34px; height: 34px; display: grid; place-items: center; border-radius: 10px; background: var(--ink); color: #fff; font-size: 14px; letter-spacing: 0; }
+    .brand small { display: block; color: var(--muted); font-size: 9px; font-weight: 650; letter-spacing: .15em; margin-top: -2px; }
+    .nav-links { display: flex; align-items: center; gap: 27px; color: #4d5870; font-size: 14px; font-weight: 620; }
+    .nav-links a:hover { color: var(--accent-dark); }
+    .nav-actions { display: flex; gap: 10px; align-items: center; }
+    .menu-toggle { display: none; width: 44px; height: 44px; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); cursor: pointer; }
+    .hamburger { position: relative; display: block; width: 17px; height: 2px; border-radius: 2px; background: currentColor; }
+    .hamburger::before,.hamburger::after { content: ""; position: absolute; left: 0; width: 17px; height: 2px; border-radius: 2px; background: currentColor; }
+    .hamburger::before { top: -6px; }
+    .hamburger::after { top: 6px; }
+    .hero { padding: 70px 0 86px; overflow: hidden; }
+    .hero-grid { display: grid; grid-template-columns: minmax(0, .96fr) minmax(420px, 1.04fr); align-items: center; gap: 60px; }
+    .hero-copy h1 { margin: 17px 0 20px; max-width: 660px; font-size: clamp(42px, 5.3vw, 68px); line-height: 1.02; letter-spacing: -.055em; }
+    .hero-copy h1 span { color: var(--accent); }
+    .hero-copy > p { max-width: 580px; margin: 0; color: var(--muted); font-size: 18px; line-height: 1.65; }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
+    .hero-note { display: flex; gap: 10px; align-items: center; margin-top: 27px; color: var(--muted); font-size: 13px; }
+    .note-dot { width: 8px; height: 8px; background: var(--teal); border-radius: 50%; box-shadow: 0 0 0 4px var(--teal-soft); flex: 0 0 auto; }
+    .preview-stage { position: relative; padding: 22px; border: 1px solid #e9e7e2; border-radius: 24px; background: linear-gradient(145deg,#f0eef8 0%,#f7f5f0 48%,#e9f0ee 100%); }
+    .preview-stage::before { content: ""; position: absolute; width: 150px; height: 150px; right: 8px; top: 8px; border: 1px solid rgba(107,89,211,.22); border-radius: 50%; pointer-events: none; }
+    .preview-stage::after { content: ""; position: absolute; width: 92px; height: 92px; left: 9px; bottom: 9px; border: 1px solid rgba(63,128,121,.22); border-radius: 50%; pointer-events: none; }
+    .app-preview { position: relative; z-index: 1; overflow: hidden; border: 1px solid rgba(24,37,66,.1); border-radius: 15px; background: var(--surface); box-shadow: var(--shadow); }
+    .app-top { height: 48px; display: flex; align-items: center; justify-content: space-between; padding: 0 16px; border-bottom: 1px solid var(--line); background: #fff; }
+    .app-lights { display: flex; gap: 5px; }
+    .app-lights i { display: block; width: 7px; height: 7px; border-radius: 50%; background: #d6d4ce; }
+    .app-top-label { color: #7b8190; font-size: 10px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+    .preview-layout { display: grid; grid-template-columns: 145px 1fr; min-height: 300px; }
+    .preview-side { background: #f8f8fa; border-right: 1px solid var(--line); padding: 16px 11px; }
+    .mini-brand { font-size: 10px; font-weight: 850; letter-spacing: .07em; margin: 3px 0 20px; }
+    .mini-nav { display: grid; gap: 7px; }
+    .mini-nav span { padding: 8px 9px; border-radius: 7px; color: #7a8090; font-size: 10px; }
+    .mini-nav span.active { background: var(--accent-soft); color: var(--accent-dark); font-weight: 750; }
+    .preview-main { padding: 19px 18px; }
+    .mini-heading { display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; }
+    .mini-heading strong { display: block; font-size: 15px; letter-spacing: -.02em; }
+    .mini-heading small { color: var(--muted); font-size: 9px; }
+    .mini-pill { padding: 5px 8px; color: var(--teal); background: var(--teal-soft); border-radius: 999px; font-size: 9px; font-weight: 750; white-space: nowrap; }
+    .mini-metrics { display: grid; grid-template-columns: repeat(3,1fr); gap: 8px; margin: 16px 0; }
+    .mini-metric { border: 1px solid var(--line); border-radius: 9px; padding: 10px; }
+    .mini-metric b { display: block; font-size: 19px; letter-spacing: -.04em; }
+    .mini-metric span { color: var(--muted); font-size: 9px; }
+    .mini-table { border: 1px solid var(--line); border-radius: 9px; overflow: hidden; }
+    .mini-table-head,.mini-row { display: grid; grid-template-columns: 1.2fr .8fr .55fr; align-items: center; gap: 8px; padding: 9px 10px; font-size: 9px; }
+    .mini-table-head { color: var(--muted); background: #fafafa; font-weight: 700; }
+    .mini-row { border-top: 1px solid #f0efec; color: #48536b; }
+    .status-mini { color: var(--amber); background: var(--amber-soft); padding: 3px 6px; border-radius: 999px; text-align: center; font-size: 8px; font-weight: 700; }
+    .caption { position: relative; z-index: 1; margin: 14px 0 0; color: #596477; text-align: center; font-size: 12px; }
+    .trust-strip { border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); background: rgba(255,255,255,.56); }
+    .trust-inner { min-height: 70px; display: flex; align-items: center; justify-content: space-between; gap: 18px; flex-wrap: wrap; }
+    .trust-inner span { color: #697286; font-size: 12px; font-weight: 720; letter-spacing: .06em; text-transform: uppercase; }
+    .trust-items { display: flex; gap: clamp(14px,3vw,34px); flex-wrap: wrap; }
+    .trust-items span { color: var(--ink-soft); font-size: 13px; font-weight: 650; letter-spacing: 0; text-transform: none; }
+    .problem-grid { display: grid; grid-template-columns: .9fr 1.1fr; align-items: start; gap: 70px; }
+    .problem-intro h2 { margin: 13px 0 16px; font-size: clamp(32px,4vw,46px); line-height: 1.1; letter-spacing: -.045em; }
+    .problem-intro p { color: var(--muted); font-size: 17px; margin: 0; }
+    .value-list { display: grid; gap: 0; border-top: 1px solid var(--line); }
+    .value-item { display: grid; grid-template-columns: 42px 1fr; gap: 15px; padding: 20px 0; border-bottom: 1px solid var(--line); }
+    .value-number { color: var(--accent); font-size: 13px; font-weight: 800; padding-top: 2px; }
+    .value-item h3 { margin: 0 0 5px; font-size: 17px; letter-spacing: -.02em; }
+    .value-item p { margin: 0; color: var(--muted); font-size: 14px; }
+    .services-section { background: var(--surface-soft); }
+    .service-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; }
+    .service-card { min-height: 235px; padding: 25px; border: 1px solid #e4e2dd; border-radius: 14px; background: var(--surface); transition: transform .2s ease, box-shadow .2s ease; }
+    .service-card:hover { transform: translateY(-3px); box-shadow: 0 12px 28px rgba(24,37,66,.07); }
+    .service-index { width: 36px; height: 36px; display: grid; place-items: center; margin-bottom: 23px; border-radius: 10px; background: var(--accent-soft); color: var(--accent-dark); font-size: 12px; font-weight: 800; }
+    .service-card h3 { margin: 0 0 10px; font-size: 19px; letter-spacing: -.025em; }
+    .service-card p { margin: 0; color: var(--muted); font-size: 14px; }
+    .method-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+    .method-step { padding: 26px 28px 28px 0; }
+    .method-step + .method-step { padding-left: 28px; border-left: 1px solid var(--line); }
+    .method-step span { color: var(--accent); font-size: 13px; font-weight: 800; }
+    .method-step h3 { margin: 14px 0 8px; font-size: 20px; letter-spacing: -.03em; }
+    .method-step p { margin: 0; color: var(--muted); font-size: 14px; }
+    .portal-section { background: var(--ink); color: #fff; overflow: hidden; }
+    .portal-grid { display: grid; grid-template-columns: .8fr 1.2fr; align-items: center; gap: 60px; }
+    .portal-section .eyebrow { color: #c6bef8; }
+    .portal-copy h2 { margin: 14px 0 16px; font-size: clamp(32px,4vw,46px); line-height: 1.1; letter-spacing: -.045em; }
+    .portal-copy p { color: rgba(255,255,255,.72); font-size: 16px; }
+    .portal-points { display: grid; gap: 11px; margin: 23px 0 28px; padding: 0; list-style: none; color: rgba(255,255,255,.88); font-size: 14px; }
+    .portal-points li { display: flex; gap: 10px; align-items: flex-start; }
+    .checkmark { flex: 0 0 auto; display: grid; place-items: center; width: 19px; height: 19px; margin-top: 1px; border-radius: 50%; background: rgba(114,188,143,.18); color: #92d6ae; font-size: 12px; font-weight: 800; }
+    .portal-preview { padding: 13px; border-radius: 16px; background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.16); }
+    .portal-preview .app-preview { box-shadow: 0 18px 50px rgba(0,0,0,.28); }
+    .security-row { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-top: 24px; }
+    .security-card { padding: 22px; border: 1px solid var(--line); border-radius: 13px; background: var(--surface); }
+    .security-card h3 { margin: 0 0 7px; font-size: 16px; }
+    .security-card p { margin: 0; color: var(--muted); font-size: 14px; }
+    .contact-section { background: #f0eef8; }
+    .contact-box { display: grid; grid-template-columns: 1fr .88fr; gap: 45px; align-items: center; padding: 42px; border-radius: 18px; background: var(--surface); box-shadow: 0 15px 44px rgba(24,37,66,.07); }
+    .contact-box h2 { margin: 12px 0 12px; font-size: clamp(30px,4vw,42px); line-height: 1.1; letter-spacing: -.04em; }
+    .contact-box p { color: var(--muted); }
+    .contact-form { display: grid; gap: 12px; }
+    .field { display: grid; gap: 6px; }
+    .field label { color: #4c566e; font-size: 13px; font-weight: 700; }
+    .field input,.field select,.field textarea { width: 100%; min-height: 46px; padding: 11px 13px; border: 1px solid #d9d8d3; border-radius: 9px; color: var(--ink); background: #fff; }
+    .field textarea { min-height: 90px; resize: vertical; }
+    .field input::placeholder,.field textarea::placeholder { color: #999da7; }
+    .form-note { color: var(--muted); font-size: 12px; margin: 0; }
+    .form-feedback { min-height: 22px; margin: 0; color: var(--accent-dark); font-size: 13px; font-weight: 650; }
+    .footer { padding: 28px 0; background: #111d35; color: rgba(255,255,255,.75); }
+    .footer-inner { display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap; }
+    .footer .brand { color: white; }
+    .footer .brand small { color: rgba(255,255,255,.55); }
+    .footer-copy { font-size: 12px; }
+    .footer-links { display: flex; gap: 19px; font-size: 13px; }
+    .footer-links a:hover { color: white; }
+    [hidden] { display: none !important; }
+
+    /* Customer portal preview */
+    #clientPortal { min-height: 100vh; background: #f6f7fa; }
+    .portal-topbar { height: 72px; display: flex; align-items: center; justify-content: space-between; padding: 0 30px; background: #fff; border-bottom: 1px solid #e7e9ee; }
+    .portal-top-left,.portal-top-right { display: flex; align-items: center; gap: 20px; }
+    .portal-brand { display: inline-flex; align-items: center; gap: 10px; font-size: 14px; font-weight: 850; letter-spacing: .06em; }
+    .portal-brand-mark { width: 30px; height: 30px; display: grid; place-items: center; border-radius: 9px; background: var(--ink); color: white; font-size: 12px; }
+    .portal-divider { width: 1px; height: 24px; background: var(--line); }
+    .company-switch { display: inline-flex; align-items: center; gap: 8px; padding: 8px 11px; border: 1px solid var(--line); border-radius: 9px; background: #fff; color: #46516a; font-size: 13px; font-weight: 650; white-space: nowrap; }
+    .company-name { display: inline-block; max-width: 150px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; vertical-align: middle; }
+    .company-square { width: 21px; height: 21px; display: grid; place-items: center; border-radius: 6px; background: #e9e5fa; color: var(--accent-dark); font-size: 10px; font-weight: 800; }
+    .portal-avatar { width: 34px; height: 34px; display: grid; place-items: center; border-radius: 50%; background: #e9e5fa; color: var(--accent-dark); font-size: 12px; font-weight: 800; }
+    .portal-main-layout { display: grid; grid-template-columns: 232px minmax(0,1fr); min-height: calc(100vh - 72px); }
+    .portal-sidebar { padding: 24px 15px; border-right: 1px solid #e7e9ee; background: #fff; }
+    .sidebar-label { margin: 0 10px 12px; color: #8a91a0; font-size: 10px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
+    .portal-nav { display: grid; gap: 4px; }
+    .portal-nav button { display: flex; align-items: center; gap: 11px; width: 100%; min-height: 44px; padding: 0 11px; border: 0; border-radius: 9px; background: transparent; color: #697386; text-align: left; font-size: 13px; font-weight: 650; cursor: pointer; }
+    .portal-nav button:hover { background: #f7f6fb; color: var(--ink); }
+    .portal-nav button[aria-current="page"] { background: var(--accent-soft); color: var(--accent-dark); }
+    .nav-symbol { width: 19px; height: 19px; display: grid; place-items: center; border: 1px solid currentColor; border-radius: 5px; font-size: 10px; font-weight: 800; }
+    .sidebar-bottom { margin-top: 38px; padding: 14px 11px; border-radius: 10px; background: #f8f7fc; color: #6b7181; font-size: 12px; }
+    .sidebar-bottom b { display: block; margin-bottom: 4px; color: var(--ink); }
+    .portal-content { width: min(1160px,100%); padding: 32px clamp(20px,4vw,48px) 56px; }
+    .portal-page-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 20px; margin-bottom: 24px; }
+    .portal-page-head h1 { margin: 0 0 6px; font-size: clamp(26px,3vw,34px); line-height: 1.15; letter-spacing: -.04em; }
+    .portal-page-head p { margin: 0; color: var(--muted); font-size: 14px; }
+    .portal-controls { display: flex; gap: 9px; flex-wrap: wrap; }
+    .period-select { min-height: 40px; padding: 0 11px; border: 1px solid #dfe2e8; border-radius: 8px; background: #fff; color: #4d5870; font-size: 13px; }
+    .portal-stats { display: grid; grid-template-columns: repeat(4,1fr); gap: 14px; margin-bottom: 20px; }
+    .stat-card { padding: 18px; border: 1px solid #e7e9ee; border-radius: 12px; background: #fff; }
+    .stat-label { color: var(--muted); font-size: 12px; font-weight: 600; }
+    .stat-value { display: flex; align-items: baseline; gap: 7px; margin: 9px 0 4px; font-size: 29px; font-weight: 780; letter-spacing: -.05em; }
+    .stat-caption { color: #8a91a0; font-size: 11px; }
+    .stat-change { color: var(--teal); font-size: 11px; font-weight: 700; }
+    .portal-grid-2 { display: grid; grid-template-columns: 1.25fr .75fr; gap: 16px; margin-bottom: 18px; }
+    .portal-card { overflow: hidden; border: 1px solid #e7e9ee; border-radius: 12px; background: #fff; }
+    .card-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 14px; padding: 17px 18px; border-bottom: 1px solid #eef0f3; }
+    .card-head h2,.card-head h3 { margin: 0 0 4px; font-size: 15px; letter-spacing: -.02em; }
+    .card-head p { margin: 0; color: var(--muted); font-size: 12px; }
+    .card-body { padding: 17px 18px; }
+    .task-list { display: grid; gap: 0; }
+    .task-row { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 12px; padding: 12px 0; border-bottom: 1px solid #f0f1f4; }
+    .task-row:last-child { border-bottom: 0; }
+    .task-title { display: block; color: #35415b; font-size: 13px; font-weight: 700; }
+    .task-meta { display: block; margin-top: 3px; color: #8a91a0; font-size: 11px; }
+    .badge { display: inline-flex; align-items: center; min-height: 24px; padding: 0 9px; border-radius: 999px; font-size: 10px; font-weight: 750; white-space: nowrap; }
+    .badge-purple { color: #5140b6; background: #efedfb; }
+    .badge-amber { color: #8d641c; background: #fbf2df; }
+    .badge-teal { color: #36716a; background: #e8f2f0; }
+    .progress-list { display: grid; gap: 16px; }
+    .progress-item { display: grid; gap: 6px; }
+    .progress-label { display: flex; justify-content: space-between; gap: 12px; color: #566078; font-size: 12px; }
+    .progress-label b { color: var(--ink); }
+    .progress-track { height: 7px; overflow: hidden; border-radius: 999px; background: #eceef2; }
+    .progress-track span { display: block; height: 100%; border-radius: inherit; background: var(--accent); }
+    .portal-table-wrap { overflow-x: auto; }
+    .portal-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+    .portal-table th { padding: 11px 15px; color: #8990a0; text-align: left; font-size: 10px; font-weight: 800; letter-spacing: .07em; text-transform: uppercase; background: #fafbfc; }
+    .portal-table td { padding: 13px 15px; border-top: 1px solid #eef0f3; color: #4a556d; }
+    .portal-table td:first-child { color: var(--ink); font-weight: 700; }
+    .portal-table tr:last-child td { border-bottom: 0; }
+    .portal-panel[hidden] { display: none; }
+    .client-list { display: grid; gap: 12px; }
+    .client-row { display: flex; align-items: center; justify-content: space-between; gap: 15px; padding: 14px; border: 1px solid #eceef2; border-radius: 10px; }
+    .client-ident { display: flex; align-items: center; gap: 12px; }
+    .client-logo { width: 38px; height: 38px; display: grid; place-items: center; border-radius: 11px; background: #efedfb; color: var(--accent-dark); font-size: 13px; font-weight: 850; }
+    .client-ident b { display: block; font-size: 13px; }
+    .client-ident small { color: var(--muted); font-size: 11px; }
+    .role-list { display: grid; grid-template-columns: repeat(3,1fr); gap: 14px; margin-top: 18px; }
+    .role-card { padding: 18px; border: 1px solid #e7e9ee; border-radius: 11px; background: #fff; }
+    .role-card h3 { margin: 0 0 7px; font-size: 14px; }
+    .role-card p { margin: 0; color: var(--muted); font-size: 12px; }
+    .modal-backdrop { position: fixed; inset: 0; z-index: 50; display: grid; place-items: center; padding: 20px; background: rgba(14,22,40,.55); }
+    .modal { width: min(520px,100%); max-height: min(88vh,780px); overflow-y: auto; padding: 25px; border: 1px solid rgba(255,255,255,.3); border-radius: 16px; background: #fff; box-shadow: 0 24px 75px rgba(0,0,0,.24); }
+    .modal-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 20px; margin-bottom: 18px; }
+    .modal-head h2 { margin: 0 0 5px; font-size: 23px; letter-spacing: -.04em; }
+    .modal-head p { margin: 0; color: var(--muted); font-size: 13px; }
+    .close-btn { width: 40px; height: 40px; border: 1px solid var(--line); border-radius: 9px; background: #fff; cursor: pointer; font-size: 20px; }
+    .modal-form { display: grid; gap: 13px; }
+    .modal .form-note { padding: 10px 12px; border-radius: 8px; background: #fff7df; color: #735820; }
+    .portal-empty { padding: 28px; border: 1px dashed #cfd4df; border-radius: 11px; color: var(--muted); text-align: center; }
+    .portal-empty b { display: block; color: var(--ink); margin-bottom: 6px; }
+
+    @media (max-width: 960px) {
+      .hero-grid { grid-template-columns: 1fr 1fr; gap: 32px; }
+      .hero-copy h1 { font-size: clamp(40px,5.4vw,58px); }
+      .preview-layout { grid-template-columns: 120px 1fr; }
+      .problem-grid,.portal-grid { gap: 38px; }
+      .portal-stats { grid-template-columns: repeat(2,1fr); }
+      .portal-grid-2 { grid-template-columns: 1fr 1fr; }
+      .nav-links { gap: 16px; }
+    }
+    @media (max-width: 720px) {
+      .wrap { width: min(100% - 36px, var(--max)); }
+      .section { padding: 68px 0; }
+      .nav { min-height: 68px; }
+      .menu-toggle { display: grid; place-items: center; }
+      .nav-links { display: none; position: absolute; left: 0; right: 0; top: 67px; padding: 16px 20px 20px; border-bottom: 1px solid var(--line); background: var(--paper); flex-direction: column; align-items: stretch; gap: 0; }
+      .nav-links.open { display: flex; }
+      .nav-links a { min-height: 46px; display: flex; align-items: center; border-bottom: 1px solid #eeede9; }
+      .nav-actions .btn-secondary { display: none; }
+      .nav-actions { gap: 7px; }
+      .nav-actions .btn { min-height: 42px; padding-inline: 9px; font-size: 12px; white-space: nowrap; }
+      .nav-actions .btn > span { display: none; }
+      .hero { padding: 52px 0 62px; }
+      .hero-grid { grid-template-columns: 1fr; gap: 38px; }
+      .hero-copy h1 { font-size: clamp(42px,12vw,58px); }
+      .hero-copy > p { font-size: 17px; }
+      .preview-stage { margin-inline: 3px; padding: 13px; }
+      .preview-layout { grid-template-columns: 102px 1fr; min-height: 275px; }
+      .preview-side { padding: 13px 8px; }
+      .mini-nav span { padding: 7px 6px; font-size: 9px; }
+      .preview-main { padding: 14px 11px; }
+      .mini-metric { padding: 8px 6px; }
+      .mini-metric b { font-size: 16px; }
+      .mini-metric span { font-size: 8px; }
+      .mini-table-head,.mini-row { gap: 4px; padding: 8px 6px; font-size: 8px; }
+      .status-mini { font-size: 7px; padding-inline: 4px; }
+      .trust-inner { padding: 17px 0; align-items: flex-start; }
+      .trust-items { gap: 10px 17px; }
+      .problem-grid,.portal-grid { grid-template-columns: 1fr; gap: 30px; }
+      .service-grid { grid-template-columns: 1fr; }
+      .service-card { min-height: 0; }
+      .method-grid { grid-template-columns: 1fr; }
+      .method-step,.method-step + .method-step { padding: 20px 0; border-left: 0; }
+      .method-step + .method-step { border-top: 1px solid var(--line); }
+      .portal-preview { padding: 8px; }
+      .portal-copy { max-width: 580px; }
+      .security-row { grid-template-columns: 1fr; }
+      .contact-box { grid-template-columns: 1fr; padding: 27px 20px; gap: 24px; }
+      .footer-inner { align-items: flex-start; flex-direction: column; }
+      .portal-topbar { height: auto; min-height: 64px; padding: 10px 15px; }
+      .portal-top-left { min-width: 0; gap: 8px; }
+      .portal-top-right { flex-shrink: 0; gap: 6px; }
+      .portal-top-left .portal-divider { display: none; }
+      .company-switch { max-width: 145px; font-size: 10px; padding: 6px 7px; gap: 6px; }
+      .company-name { max-width: 76px; }
+      .portal-brand { gap: 7px; font-size: 11px; white-space: nowrap; }
+      .portal-brand-mark { width: 27px; height: 27px; }
+      .portal-top-right .btn { min-height: 38px; padding-inline: 8px; font-size: 11px; white-space: nowrap; }
+      .portal-avatar { display: none; }
+      .portal-main-layout { grid-template-columns: 1fr; }
+      .portal-sidebar { padding: 10px 12px; border-right: 0; border-bottom: 1px solid #e7e9ee; }
+      .sidebar-label,.sidebar-bottom { display: none; }
+      .portal-nav { display: flex; flex-wrap: wrap; gap: 5px; }
+      .portal-nav button { width: auto; min-height: 40px; padding: 0 9px; font-size: 11px; }
+      .nav-symbol { width: 17px; height: 17px; }
+      .portal-content { padding: 20px 15px 40px; }
+      .portal-page-head { flex-direction: column; }
+      .portal-controls { width: 100%; }
+      .portal-controls .btn { flex: 1; }
+      .portal-grid-2 { grid-template-columns: 1fr; }
+      .role-list { grid-template-columns: 1fr; }
+      .portal-table-wrap { overflow: visible; }
+      .portal-table thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; }
+      .portal-table,.portal-table tbody,.portal-table tr,.portal-table td { display: block; width: 100%; }
+      .portal-table tr { padding: 10px 14px; border-top: 1px solid #eef0f3; }
+      .portal-table td { display: flex; justify-content: space-between; gap: 12px; padding: 6px 0; border: 0; font-size: 12px; }
+      .portal-table td:first-child { font-size: 13px; }
+      .portal-table td::before { content: attr(data-label); color: #8990a0; font-size: 10px; font-weight: 800; letter-spacing: .04em; text-transform: uppercase; }
+    }
+    @media (max-width: 420px) {
+      .wrap { width: calc(100% - 32px); }
+      .brand { gap: 8px; font-size: 14px; }
+      .brand-mark { width: 31px; height: 31px; }
+      .nav-actions .btn { padding-inline: 10px; }
+      .hero-actions .btn { width: 100%; }
+      .mini-heading strong { font-size: 13px; }
+      .mini-heading small { font-size: 8px; }
+      .preview-layout { grid-template-columns: 88px 1fr; }
+      .mini-brand { font-size: 9px; }
+      .mini-nav span { font-size: 8px; }
+      .portal-stats { gap: 9px; }
+      .stat-card { padding: 14px; }
+      .stat-value { font-size: 25px; }
+      .client-row { align-items: flex-start; flex-direction: column; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *,*::before,*::after { scroll-behavior: auto !important; transition-duration: .01ms !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; }
+    }
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) { color-scheme: dark; --ink:#f2f4fa; --ink-soft:#d4d9e5; --muted:#b3bbca; --paper:#191d27; --surface:#202633; --surface-soft:#222936; --line:#394151; --accent:#a69bf4; --accent-dark:#c1b9ff; --accent-soft:#312c4d; --teal:#86c7bb; --teal-soft:#263b39; --amber:#ebc16f; --amber-soft:#423a2a; --red:#e4938d; --red-soft:#432c2e; --shadow:0 20px 55px rgba(0,0,0,.28); }
+      :root:not([data-theme="light"]) .topbar { background: rgba(25,29,39,.92); border-color: var(--line); }
+      :root:not([data-theme="light"]) .nav-links { color:#c7cddd; }
+      :root:not([data-theme="light"]) .btn-secondary,:root:not([data-theme="light"]) .company-switch,:root:not([data-theme="light"]) .period-select { color:var(--ink); background:var(--surface); border-color:var(--line); }
+      :root:not([data-theme="light"]) .preview-stage { background:linear-gradient(145deg,#2b2940 0%,#282a34 48%,#253533 100%); border-color:var(--line); }
+      :root:not([data-theme="light"]) .app-preview,:root:not([data-theme="light"]) .app-top,:root:not([data-theme="light"]) .contact-box,:root:not([data-theme="light"]) .service-card,:root:not([data-theme="light"]) .security-card,:root:not([data-theme="light"]) .modal { background:var(--surface); color:var(--ink); }
+      :root:not([data-theme="light"]) .app-top,:root:not([data-theme="light"]) .mini-table-head { background:#252b38; border-color:var(--line); }
+      :root:not([data-theme="light"]) .preview-side { background:#242a37; border-color:var(--line); }
+      :root:not([data-theme="light"]) .mini-nav span { color:var(--muted); }
+      :root:not([data-theme="light"]) .mini-row,:root:not([data-theme="light"]) .portal-table td { color:#c9d0de; }
+      :root:not([data-theme="light"]) .trust-strip,:root:not([data-theme="light"]) .contact-section { background:#202633; border-color:var(--line); }
+      :root:not([data-theme="light"]) .field input,:root:not([data-theme="light"]) .field select,:root:not([data-theme="light"]) .field textarea { background:#191d27; border-color:var(--line); color:var(--ink); }
+      :root:not([data-theme="light"]) .portal-topbar,:root:not([data-theme="light"]) .portal-sidebar { background:#202633; border-color:var(--line); }
+      :root:not([data-theme="light"]) #clientPortal { background:#191d27; }
+      :root:not([data-theme="light"]) .portal-card,:root:not([data-theme="light"]) .stat-card,:root:not([data-theme="light"]) .role-card { background:#202633; border-color:var(--line); }
+      :root:not([data-theme="light"]) .portal-nav button:hover { background:#2c3342; }
+      :root:not([data-theme="light"]) .modal-backdrop { background:rgba(0,0,0,.7); }
+      :root:not([data-theme="light"]) .contact-box { box-shadow:none; }
+    }
+
+    .feature-chips { display:flex; flex-wrap:wrap; gap:10px; margin-top:22px; }
+    .feature-chips span { display:inline-flex; padding:11px 14px; border:1px solid var(--line); border-radius:10px; background:var(--surface-soft); color:var(--ink-soft); font-size:13px; font-weight:700; }
+    .auth-shell { min-height:100vh; padding:34px 20px; display:grid; align-content:start; justify-items:center; gap:34px; background:var(--paper); }
+    .auth-brand { justify-self:start; }
+    .auth-card { width:min(100%, 500px); padding:34px; border:1px solid var(--line); border-radius:18px; background:var(--surface); box-shadow:var(--shadow); }
+    .auth-card h1 { margin:12px 0 8px; font-size:clamp(28px,4vw,38px); }
+    .auth-card > p { color:var(--muted); }
+    .portal-form { display:grid; gap:15px; margin:22px 0; }
+    .portal-form .field { display:grid; gap:7px; }
+    .portal-form input,.portal-form select,.portal-form textarea,.portal-data-form input,.portal-data-form select,.portal-data-form textarea { width:100%; padding:12px 13px; border:1px solid var(--line); border-radius:9px; background:var(--surface); color:var(--ink); font:inherit; }
+    .portal-form label,.portal-data-form label { color:var(--ink-soft); font-size:13px; font-weight:700; }
+    .portal-form [hidden],.portal-data-form [hidden] { display:none !important; }
+    .auth-switch { margin:8px 0 18px; color:var(--muted); font-size:14px; }
+    .auth-switch button { border:0; padding:0; background:transparent; color:var(--accent-dark); font:inherit; font-weight:750; cursor:pointer; }
+    .portal-feedback { margin:0 0 12px; }
+    .portal-page-head { flex-wrap:wrap; }
+    .portal-data-form { padding:20px; }
+    .portal-data-form .form-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:14px; }
+    .portal-data-form .field { display:grid; gap:7px; }
+    .portal-data-form .field.wide { grid-column:1/-1; }
+    .portal-data-form button { margin-top:14px; }
+    .data-list { display:grid; gap:12px; margin-top:16px; }
+    .data-row { display:flex; align-items:flex-start; justify-content:space-between; gap:16px; padding:15px; border:1px solid var(--line); border-radius:10px; background:var(--surface); }
+    .data-row h3 { margin:0 0 5px; font-size:15px; }
+    .data-row p { margin:3px 0; color:var(--muted); font-size:13px; }
+    .data-row-actions { display:flex; gap:8px; align-items:center; flex-wrap:wrap; }
+    .portal-empty { padding:20px; color:var(--muted); text-align:center; }
+    .inline-feedback { min-height:20px; margin:0; color:var(--accent-dark); font-size:13px; }
+    .portal-overview-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:14px; margin-bottom:20px; }
+    .portal-stat { padding:18px; border:1px solid var(--line); border-radius:12px; background:var(--surface); }
+    .portal-stat span { display:block; color:var(--muted); font-size:13px; }
+    .portal-stat strong { display:block; margin-top:8px; font-size:28px; }
+    .portal-data-form table { width:100%; }
+    .portal-data-form .small-button { min-height:36px; padding:0 12px; }
+    .portal-data-form input[type="file"] { padding:9px; }
+    .portal-form-list .portal-card { margin-bottom:12px; }
+    .portal-form-list form { display:grid; gap:12px; padding:16px; border-top:1px solid var(--line); }
+    .portal-form-list form .field { display:grid; gap:7px; }
+    .portal-table-wrap { overflow-x:auto; }
+    .data-row .badge { white-space:nowrap; }
+    .record-dialog { width:min(92vw,620px); max-height:90vh; overflow:auto; padding:24px; border:1px solid var(--line); border-radius:16px; background:var(--surface); color:var(--ink); box-shadow:var(--shadow); }
+    .record-dialog::backdrop { background:rgba(15,20,32,.55); }
+    .record-dialog .modal-head { display:flex; align-items:center; justify-content:space-between; margin-bottom:14px; }
+    .record-dialog .modal-head h2 { margin:0; }
+    .record-dialog .form-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:14px; }
+    .record-dialog .field { display:grid; gap:7px; }
+    .record-dialog .field.wide { grid-column:1/-1; }
+    .record-dialog input,.record-dialog select,.record-dialog textarea { width:100%; padding:12px; border:1px solid var(--line); border-radius:9px; background:var(--surface); color:var(--ink); font:inherit; }
+    .dialog-actions { display:flex; justify-content:flex-end; gap:10px; margin-top:18px; }
+    @media(max-width:720px) { .record-dialog .form-grid { grid-template-columns:1fr; } }
+    @media(max-width:720px) {
+      .auth-shell { padding:22px 14px; }
+      .auth-card { padding:24px 18px; }
+      .portal-data-form .form-grid { grid-template-columns:1fr; }
+      .portal-overview-grid { grid-template-columns:1fr; }
+      .portal-top-left { min-width:0; }
+      .portal-top-right #activeUser { display:none; }
+      .data-row { flex-direction:column; }
+    }
+
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#mainContent">Pular para o conteúdo</a>
+  
+
+  <div id="publicSite">
+    <header class="topbar">
+      <div class="wrap nav">
+        <a class="brand" href="#inicio" aria-label="RH Intense, início">
+          <span class="brand-mark" aria-hidden="true">RI</span>
+          <span>RH INTENSE<small>GESTÃO DE PESSOAS</small></span>
+        </a>
+        <nav class="nav-links" id="mainNav" aria-label="Navegação principal">
+          <a href="#solucoes">Soluções</a>
+          <a href="#metodo">Como trabalhamos</a>
+          <a href="#portal">Portal do cliente</a>
+          <a href="#contato">Contato</a>
+        </nav>
+        <div class="nav-actions">
+          <button class="btn btn-secondary btn-small" type="button" data-open-contact>Fale com a RH Intense</button>
+          <button class="btn btn-small" type="button" data-open-portal>Acessar portal <span aria-hidden="true">↗</span></button>
+          <button class="menu-toggle" id="menuToggle" type="button" aria-label="Abrir menu" aria-expanded="false" aria-controls="mainNav"><span class="hamburger" aria-hidden="true"></span></button>
+        </div>
+      </div>
+    </header>
+
+    <main id="mainContent">
+      <section class="hero" id="inicio">
+        <div class="wrap hero-grid">
+          <div class="hero-copy">
+            <span class="eyebrow">Gestão de pessoas · RH Intense</span>
+            <h1>Pessoas bem cuidadas.<br><span>Processos bem conduzidos.</span></h1>
+            <p>Uma parceria de RH próxima e organizada para empresas que querem cuidar da equipe com mais clareza, consistência e confiança.</p>
+            <div class="hero-actions">
+              <a class="btn" href="#solucoes">Conheça as soluções <span aria-hidden="true">↓</span></a>
+              <button class="btn btn-secondary" type="button" data-open-contact>Conversar sobre sua empresa</button>
+            </div>
+            <div class="hero-note"><span class="note-dot" aria-hidden="true"></span><span>Atendimento próximo, processos claros e acompanhamento estruturado.</span></div>
+          </div>
+          <div class="preview-stage" aria-label="Recursos disponíveis no portal RH Intense">
+            <div class="app-preview">
+              <div class="app-top"><div class="app-lights" aria-hidden="true"><i></i><i></i><i></i></div><span class="app-top-label">portal RH Intense</span><span aria-hidden="true">•••</span></div>
+              <div class="preview-main">
+                <div class="mini-heading"><div><strong>Gestão de pessoas</strong><small>Um espaço de trabalho por empresa</small></div></div>
+                <div class="feature-chips"><span>Equipe</span><span>Processos</span><span>Formulários</span><span>Documentos</span><span>Prazos</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div class="trust-strip" aria-label="Áreas de atuação">
+        <div class="wrap trust-inner"><span>RH com método e proximidade</span><div class="trust-items"><span>Recrutamento</span><span>Rotinas de RH</span><span>Desenvolvimento</span><span>Portal por empresa</span></div></div>
+      </div>
+
+      <section class="section" id="diferenciais">
+        <div class="wrap problem-grid">
+          <div class="problem-intro"><span class="eyebrow">Uma parceria de verdade</span><h2>Mais clareza para quem cuida de pessoas.</h2><p>A RH Intense organiza rotinas de RH para que a empresa tenha visibilidade do que está acontecendo e saiba qual é o próximo passo.</p></div>
+          <div class="value-list">
+            <article class="value-item"><span class="value-number">01</span><div><h3>Processos que fazem sentido</h3><p>Fluxos claros, responsabilidades definidas e acompanhamento sem complicação.</p></div></article>
+            <article class="value-item"><span class="value-number">02</span><div><h3>Proximidade com a empresa</h3><p>Uma forma de trabalhar alinhada à realidade, ao momento e às prioridades de cada equipe.</p></div></article>
+            <article class="value-item"><span class="value-number">03</span><div><h3>Visibilidade do trabalho</h3><p>Um espaço organizado para consultar etapas, prazos e ações em andamento.</p></div></article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section services-section" id="solucoes">
+        <div class="wrap">
+          <div class="section-head"><span class="eyebrow">Soluções de RH</span><h2>O suporte certo para cada etapa da jornada.</h2><p>Serviços que podem ser ajustados conforme a necessidade da empresa e o escopo combinado.</p></div>
+          <div class="service-grid">
+            <article class="service-card"><span class="service-index">01</span><h3>Recrutamento e seleção</h3><p>Organização de vagas, etapas de seleção, alinhamento de perfil e acompanhamento de candidaturas.</p></article>
+            <article class="service-card"><span class="service-index">02</span><h3>Rotinas e experiência</h3><p>Apoio à admissão, integração, cadastro profissional, férias e ausências, além de processos de saída.</p></article>
+            <article class="service-card"><span class="service-index">03</span><h3>Desenvolvimento de pessoas</h3><p>Planejamento de treinamentos, conversas de desempenho e ações de desenvolvimento.</p></article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="metodo">
+        <div class="wrap">
+          <div class="section-head"><span class="eyebrow">Como trabalhamos</span><h2>Uma jornada simples, com acompanhamento em cada fase.</h2><p>O ponto de partida é entender a empresa. O trabalho avança com combinados claros e revisão contínua.</p></div>
+          <div class="method-grid">
+            <article class="method-step"><span>ETAPA 01</span><h3>Entender</h3><p>Alinhamos contexto, prioridades, pessoas envolvidas e o que precisa melhorar.</p></article>
+            <article class="method-step"><span>ETAPA 02</span><h3>Estruturar</h3><p>Organizamos fluxos, responsáveis, etapas e formas de acompanhar cada processo.</p></article>
+            <article class="method-step"><span>ETAPA 03</span><h3>Acompanhar</h3><p>Revisamos prazos, registramos decisões e ajustamos o trabalho com a empresa.</p></article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section portal-section" id="portal">
+        <div class="wrap portal-grid">
+          <div class="portal-copy"><span class="eyebrow">Portal do cliente</span><h2>Uma área organizada para cada empresa.</h2><p>A experiência do portal foi pensada para reunir equipe, processos e próximos passos em um só lugar — com acesso adequado a cada empresa.</p>
+            <ul class="portal-points"><li><span class="checkmark" aria-hidden="true">✓</span><span>Visão de pessoas e processos em andamento.</span></li><li><span class="checkmark" aria-hidden="true">✓</span><span>Atalhos para prazos, pendências e ações.</span></li><li><span class="checkmark" aria-hidden="true">✓</span><span>Estrutura preparada para perfis e permissões por empresa.</span></li></ul>
+            <button class="btn btn-light" type="button" data-open-portal>Acessar portal <span aria-hidden="true">↗</span></button>
+          </div>
+          <div class="portal-preview">
+            <div class="app-preview">
+              <div class="app-top"><div class="app-lights" aria-hidden="true"><i></i><i></i><i></i></div><span class="app-top-label">área de trabalho</span><span aria-hidden="true">•••</span></div>
+              <div class="preview-main"><div class="mini-heading"><div><strong>Rotinas de RH em um só lugar</strong><small>Acesse com sua conta</small></div></div><div class="feature-chips"><span>Gestão de pessoas</span><span>Processos e prazos</span><span>Documentos</span><span>Formulários</span></div></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="privacidade">
+        <div class="wrap">
+          <div class="section-head"><span class="eyebrow">Confiança e responsabilidade</span><h2>Privacidade precisa fazer parte do projeto desde o início.</h2><p>Dados de pessoas pedem cuidado. A publicação do portal deve incluir controles técnicos e operacionais adequados ao escopo contratado.</p></div>
+          <div class="security-row"><article class="security-card"><h3>Acesso separado por empresa</h3><p>As informações do portal são vinculadas à empresa e verificadas no servidor em cada solicitação.</p></article><article class="security-card"><h3>Dados mínimos e transparência</h3><p>Cadastre somente as informações profissionais necessárias e defina políticas de acesso, retenção e privacidade para sua operação.</p></article></div>
+        </div>
+      </section>
+
+      <section class="section contact-section" id="contato">
+        <div class="wrap contact-box">
+          <div><span class="eyebrow">Vamos conversar</span><h2>O RH da sua empresa pode ser mais leve e organizado.</h2><p>Conte um pouco do que sua empresa precisa. A RH Intense pode entender o cenário e conversar sobre os próximos passos.</p></div>
+          <form class="contact-form" id="contactForm">
+            <div class="field"><label for="contactName">Seu nome</label><input id="contactName" name="name" autocomplete="name" placeholder="Como podemos chamar você?" required /></div>
+            <div class="field"><label for="contactCompany">Empresa</label><input id="contactCompany" name="company" autocomplete="organization" placeholder="Nome da empresa" required /></div>
+            <div class="field"><label for="contactEmail">E-mail profissional</label><input id="contactEmail" name="email" type="email" autocomplete="email" placeholder="voce@empresa.com.br" required /></div>
+            <div class="field"><label for="contactNeed">O que sua empresa precisa?</label><select id="contactNeed" name="need"><option>Quero conhecer os serviços</option><option>Preciso organizar processos de RH</option><option>Quero conversar sobre o portal</option><option>Outro assunto</option></select></div>
+            <button class="btn" type="submit">Enviar solicitação <span aria-hidden="true">→</span></button>
+            <p class="form-note">Sua solicitação será registrada para retorno da equipe RH Intense.</p>
+            <p class="form-feedback" id="contactFeedback" aria-live="polite"></p>
+          </form>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer"><div class="wrap footer-inner"><a class="brand" href="#inicio"><span class="brand-mark" aria-hidden="true">RI</span><span>RH INTENSE<small>GESTÃO DE PESSOAS</small></span></a><span class="footer-copy">© <span id="year"></span> RH Intense · Gestão de pessoas.</span><div class="footer-links"><a href="#privacidade">Privacidade</a><button type="button" class="text-link" data-open-portal style="background:none;border:0;cursor:pointer;font:inherit;color:inherit;padding:0">Portal do cliente</button></div></div></footer>
+  </div>
+
+  <main id="clientPortal" hidden aria-label="Portal do cliente">
+    <section class="auth-shell" id="authView">
+      <a class="portal-brand auth-brand" href="#inicio" data-back-site><span class="portal-brand-mark">RI</span>RH INTENSE</a>
+      <div class="auth-card">
+        <span class="eyebrow">Portal do cliente</span>
+        <h1 id="authTitle">Acessar sua conta</h1>
+        <p id="authDescription">Entre para acompanhar as rotinas da sua empresa.</p>
+        <form class="portal-form" id="loginForm">
+          <div class="field"><label for="loginEmail">E-mail</label><input id="loginEmail" name="email" type="email" autocomplete="email" required /></div>
+          <div class="field"><label for="loginPassword">Senha</label><input id="loginPassword" name="password" type="password" autocomplete="current-password" required /></div>
+          <button class="btn" type="submit">Entrar</button>
+          <p class="form-feedback" id="loginFeedback" aria-live="polite"></p>
+        </form>
+        <form class="portal-form" id="registerForm" hidden>
+          <div class="field"><label for="registerCompany">Nome da empresa</label><input id="registerCompany" name="companyName" autocomplete="organization" maxlength="140" required /></div>
+          <div class="field"><label for="registerName">Seu nome</label><input id="registerName" name="name" autocomplete="name" maxlength="120" required /></div>
+          <div class="field"><label for="registerEmail">E-mail</label><input id="registerEmail" name="email" type="email" autocomplete="email" required /></div>
+          <div class="field"><label for="registerPassword">Senha (mínimo 12 caracteres)</label><input id="registerPassword" name="password" type="password" autocomplete="new-password" minlength="12" required /></div>
+          <button class="btn" type="submit">Criar empresa e acesso</button>
+          <p class="form-feedback" id="registerFeedback" aria-live="polite"></p>
+        </form>
+        <p class="auth-switch" id="authSwitch">Primeiro acesso? <button type="button" id="showRegister">Cadastrar empresa</button></p>
+        <p class="form-feedback" id="authFeedback" role="status" aria-live="polite"></p>
+        <button class="text-link" type="button" data-back-site>Voltar ao site</button>
+      </div>
+    </section>
+
+    <div id="appView" hidden>
+      <header class="portal-topbar">
+        <div class="portal-top-left"><a class="portal-brand" href="#inicio" data-back-site><span class="portal-brand-mark">RI</span>RH INTENSE</a><span class="portal-divider" aria-hidden="true"></span><span class="company-name" id="activeCompany"></span></div>
+        <div class="portal-top-right"><span id="activeUser"></span><button class="btn btn-secondary btn-small" type="button" id="logoutButton">Sair</button></div>
+      </header>
+      <div class="portal-main-layout">
+        <aside class="portal-sidebar">
+          <p class="sidebar-label">Área da empresa</p>
+          <nav class="portal-nav" aria-label="Menu do portal">
+            <button type="button" aria-current="page" data-panel="overview">Visão geral</button>
+            <button type="button" data-panel="team">Funcionários</button>
+            <button type="button" data-panel="processes">Processos</button>
+            <button type="button" data-panel="forms">Formulários</button>
+            <button type="button" data-panel="documents">Documentos</button>
+            <button type="button" data-panel="deadlines">Prazos</button>
+            <button type="button" data-panel="company">Empresa</button>
+          </nav>
+        </aside>
+        <div class="portal-content">
+          <p class="form-feedback portal-feedback" id="portalFeedback" role="status" aria-live="polite"></p>
+          <section class="portal-panel" id="portalView" aria-live="polite"></section>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <dialog id="editDialog" class="record-dialog" aria-labelledby="editDialogTitle">
+    <form id="editRecordForm" class="portal-form">
+      <div class="modal-head"><div><h2 id="editDialogTitle">Editar registro</h2></div><button class="close-btn" type="button" id="closeEditDialog" aria-label="Fechar">×</button></div>
+      <div id="editRecordFields" class="form-grid"></div>
+      <div class="dialog-actions"><button class="btn btn-secondary btn-small" type="button" id="cancelEdit">Cancelar</button><button class="btn btn-small" type="submit">Salvar alterações</button></div>
+      <p class="inline-feedback" id="editRecordFeedback" role="status"></p>
+    </form>
+  </dialog>
+  <script src="/app.js" defer></script>
+</body>
+</html>

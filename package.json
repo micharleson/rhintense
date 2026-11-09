@@ -1,0 +1,13 @@
+{
+  "name": "rh-intense-portal",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Site e portal de gestão de RH com API e SQLite",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "engines": {
+    "node": ">=22.13.0"
+  }
+}
